@@ -6,6 +6,7 @@ __Requirements :__
 - Créer les dossiers/fichiers : `/files/error/` & `/files/logs/discord.log`
 
 Créer un fichier `/files/configuration.json` tel que : 
+
 ``
 {
     "token" : "Votre token",
