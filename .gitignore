@@ -1,9 +1,7 @@
-# Private folder
 Private/
-test/
+testing/
 site-yokai-bot/
 
-#config/log/error
 files/configuration.json
 files/logs/*
 !files/logs/
