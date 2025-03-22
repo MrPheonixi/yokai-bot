@@ -1,0 +1,11 @@
+# Private folder
+Private/
+test/
+site-yokai-bot/
+
+#config/log/error
+files/configuration.json
+files/logs/*
+!files/logs/
+files/error/*
+!files/error/
