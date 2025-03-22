@@ -4,7 +4,8 @@ __Requirements :__
 - Python 3.12+
 - Libraries : discord.py / colorlog
 - Créer les dossiers/fichiers : `/files/error/` & `/files/logs/discord.log`
-- Créer un fichier `/files/configuration.json` tel que : \n
+
+Créer un fichier `/files/configuration.json` tel que : 
 ``
 {
     "token" : "Votre token",
