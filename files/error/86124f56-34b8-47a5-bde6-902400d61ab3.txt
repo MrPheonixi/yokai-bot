@@ -1,0 +1,12 @@
+
+Error message :
+Traceback (most recent call last):
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 372, in reset
+    await save_data ()
+          ^^^^^^^^^^^^
+TypeError: save_data() missing 2 required positional arguments: 'path' and 'data'
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-02-28 20:33:54
+- Commande qui a causé l'erreur : reset

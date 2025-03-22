@@ -1,0 +1,19 @@
+
+Error message :
+Traceback (most recent call last):
+  File "/home/lubin/#Progamation/python/bot discord/yokai bot/script/main.py", line 790, in medallium
+    await ctx.send("test", view=Dropdown)
+  File "/home/lubin/#Progamation/python/bot discord/yokai bot/.venv/lib/python3.11/site-packages/discord/ext/commands/context.py", line 1081, in send
+    response = await self.interaction.response.send_message(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lubin/#Progamation/python/bot discord/yokai bot/.venv/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lubin/#Progamation/python/bot discord/yokai bot/.venv/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-03-19 15:16:51
+- Commande qui a causé l'erreur : medallium

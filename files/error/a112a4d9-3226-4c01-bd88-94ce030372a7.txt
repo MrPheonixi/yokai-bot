@@ -1,0 +1,19 @@
+
+Error message :
+Traceback (most recent call last):
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 722, in medallium
+    await ctx.send(view=dropdown)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\ext\commands\context.py", line 1077, in send
+    await self.interaction.response.send_message(**kwargs)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\interactions.py", line 839, in send_message
+    params = interaction_message_response_params(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\webhook\async_.py", line 581, in interaction_message_response_params
+    data['components'] = view.to_components()
+                         ^^^^^^^^^^^^^^^^^^^^
+TypeError: View.to_components() missing 1 required positional argument: 'self'
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-03-16 16:52:19
+- Commande qui a causé l'erreur : medallium

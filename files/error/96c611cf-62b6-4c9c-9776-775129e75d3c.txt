@@ -1,0 +1,11 @@
+
+Error message :
+Traceback (most recent call last):
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 607, in yokai
+    yokai_embed.set_footer(name="V2.5 : Maintenant vous pouvez trades des yokai ('/help User' pour plus d'infos dans la categorie .trade)")
+TypeError: Embed.set_footer() got an unexpected keyword argument 'name'
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-03-05 12:52:05
+- Commande qui a causé l'erreur : yokai

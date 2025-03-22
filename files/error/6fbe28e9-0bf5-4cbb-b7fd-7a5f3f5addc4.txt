@@ -1,0 +1,12 @@
+
+Error message :
+Traceback (most recent call last):
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 801, in trade
+    value=f"Le Yo-kai **{son_yokai}** de rang **{classid_to_class(author_inv[son_yokai][0])}**"
+                                                                  ~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'Lama Laya'
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-03-01 16:59:40
+- Commande qui a causé l'erreur : trade

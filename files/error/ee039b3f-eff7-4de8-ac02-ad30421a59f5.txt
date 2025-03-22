@@ -1,0 +1,14 @@
+
+Error message :
+Traceback (most recent call last):
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 601, in yokai
+    await save_inv(brute_inventory)
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 66, in save_inv
+    with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument: './files/inventory/<built-in function id>.json'
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-02-28 19:47:22
+- Commande qui a causé l'erreur : yokai

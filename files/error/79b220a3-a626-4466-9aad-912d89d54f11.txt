@@ -1,0 +1,12 @@
+
+Error message :
+Traceback (most recent call last):
+  File "d:\User\lubin\Documents\#Programmation\python\bot discord\yokai bot\script\main.py", line 827, in trade
+    offered_yokai += f"> Le Yo-kai **{asked_yokai}** de rang **{classid_to_class(author_inv[asked_yokai][0])}**\n "
+                                                                                 ~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'Potache'
+
+
+- Nom d'utilisateur / id : __hubble/882241177578004542
+- Heure de l'erreur : 2025-03-05 12:40:38
+- Commande qui a causé l'erreur : trade
