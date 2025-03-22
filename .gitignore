@@ -1,9 +1,8 @@
+#privates folders
 Private/
 testing/
 site-yokai-bot/
 
-files/configuration.json
-files/logs/*
-!files/logs/
-files/error/*
-!files/error/
+#Privates files
+configuration.json
+discord.log
