@@ -8,6 +8,7 @@ __Requirements :__
 Créer un fichier `/files/configuration.json` tel que : 
 
 ``
+
 {
     "token" : "Votre token",
     "prefix" : ".",
