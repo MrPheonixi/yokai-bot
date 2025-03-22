@@ -58,18 +58,19 @@ async def get_inv(id : int):
         with open(f"./files/inventory/{str(id)}.json") as f:
             data = json.load(f)
     else :
+        #retrun nothing if there's nothing to :/
         data = {}
        
     return data
 
-
+#save inv func
 async def save_inv(data : dict, id : int):
     with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
 
 
-
+#A func to get .json data into dict
 def get_data(path : str) -> dict:
    #get json data
     with open(path) as f:
@@ -77,6 +78,7 @@ def get_data(path : str) -> dict:
        
     return data
 
+#A func to save dict data into .json
 def save_data(path : str, data : dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
@@ -104,10 +106,11 @@ with open("./files/yokai_list.json") as yokai_list:
         "SpecialS" : len(yokai_data["SpecialS"]["yokai_list"]),
         "Boss" : len(yokai_data["Boss"]["yokai_list"])
     }
-    
+#Make the class list and the proba    
 Class_list = ['E', 'D', 'C', 'B', 'A', 'S', 'LegendaryS', "treasureS", "SpecialS", 'DivinityS', "Boss"]
 Proba_list = [0.4175, 0.2, 0.12, 0.12, 0.08, 0.04, 0.0075, 0.0075, 0.0075, 0.005, 0.0025]
 
+#A func that convert class-id to class name and reverse
 def classid_to_class(id, reverse : bool = False):
     if reverse == False :
         return yokai_data[id]["class_name"]
@@ -376,6 +379,7 @@ class Admin_command(commands.Cog):
                 )
                     return await send_embed(ctx, error_embed)
                 
+                #empt the inv and send the message
                 brute_inventory = {}
                 await save_inv(brute_inventory, input_id)
                 sucess_embed = discord.Embed(
