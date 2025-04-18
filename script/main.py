@@ -344,7 +344,7 @@ class Admin_command(commands.Cog):
     
     
     
-    @commands.hybrid_command(name="reset")
+    @commands.command(name="reset")
     async def reset(self, ctx, input_id : str):
         """
         Reset le Médallium de l'utilisateur donné.
