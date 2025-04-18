@@ -18,4 +18,6 @@ Créer un fichier `/files/configuration.json` tel que :
 __Informations :__
 Dans le code, le "rang" d'un Yo-kai est appelé "class".
 
-# Le code ne semble pas fonctionner sous windows, il n'a aucun problème sous linux/debian.
+# Le code ne semble pas fonctionner sous windows pour la fonction `classid_to_class(str(), true)`, il n'a aucun problème sous linux/debian.
+
+Merci de lire `CONTRIBUTING.md` pour savoir comment contribuer.
