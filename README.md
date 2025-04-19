@@ -55,7 +55,7 @@
 ## Informations :
 Dans le code, le "rang" d'un Yo-kai est appelé "class".
 
---> Le code ne semble pas fonctionner sous windows pour la fonction `classid_to_class(str(), true)`, il n'a aucun problème sous linux/debian.
+**--> Le code ne semble pas fonctionner sous windows pour la fonction `classid_to_class(str(), true)`, il n'a aucun problème sous linux/debian.**
 
 ## Participer :
 Merci de votre intérêt ! Voici comment contribuer :
