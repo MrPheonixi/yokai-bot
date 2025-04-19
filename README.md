@@ -55,6 +55,9 @@
 ## Informations :
 Dans le code, le "rang" d'un Yo-kai est appelé "class".
 
+Vous pouvez executer `./script/main.py` pour lancer le bot
+*Attention à executer le script depuis le bon dossier, il ne faut pas executer le script autrement que part `./script/main.py` (par exemple, `main.py` directement dans le dossier `./script`) sans modifier le code.*
+
 **--> Le code ne semble pas fonctionner sous windows pour la fonction `classid_to_class(str(), true)`, il n'a aucun problème sous linux/debian.**
 
 ## Participer :
