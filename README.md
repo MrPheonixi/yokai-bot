@@ -19,7 +19,6 @@ Créer un fichier `/files/bot-data.json` tel que :
 
 
 ``
-{
     "image_link" : {
         "B" : "Lien image du rang B",
         "E" : "Lien image du rang E",
@@ -47,7 +46,6 @@ Créer un fichier `/files/bot-data.json` tel que :
         "SpecialS":"Markdown émoji spécial",
         "Boss":"Markdown émoji Boss"
     }
-}
 ``
 
 
