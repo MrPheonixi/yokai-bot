@@ -13,10 +13,13 @@ Créer un fichier `/files/configuration.json` tel que :
     "prefix" : ".",
     "team_members_id" : [ID Discord des personnes pouvant exécuter des commandes d'administration.]
 }
+
 ``
 
 Créer un fichier `/files/bot-data.json` tel que :
+
 ``
+
 {
     "image_link" : {
         "B" : "Lien image du rang B",
@@ -46,6 +49,7 @@ Créer un fichier `/files/bot-data.json` tel que :
     "Boss":"Markdown émoji Boss"
  }
 }
+
 ``
 
 
