@@ -31,21 +31,21 @@ Créer un fichier `/files/bot-data.json` tel que :
         "SpecialS" : "Lien image pour les Spécial",
         "DivinityS" : "Lien image pour les divinité",
         "Boss" : "Lien image pour les Boss"
+        },
 
-    },
     "emoji" : {
-    "treasureS" : "Markdown émoji trésor",
-    "B" : "Markdown émoji B",
-    "E" : "Markdown émoji E",
-    "C" : "Markdown émoji C",
-    "A" : "Markdown émoji A",
-    "D" : "Markdown émoji D",
-    "S" : "Markdown émoji S",
-    "DivinityS": "Markdown émoji divinité",
-    "LegendaryS": "Markdown émoji legendaire",
-    "SpecialS":"Markdown émoji spécial",
-    "Boss":"Markdown émoji Boss"
- }
+        "treasureS" : "Markdown émoji trésor",
+        "B" : "Markdown émoji B",
+        "E" : "Markdown émoji E",
+        "C" : "Markdown émoji C",
+        "A" : "Markdown émoji A",
+        "D" : "Markdown émoji D",
+        "S" : "Markdown émoji S",
+        "DivinityS": "Markdown émoji divinité",
+        "LegendaryS": "Markdown émoji legendaire",
+        "SpecialS":"Markdown émoji spécial",
+        "Boss":"Markdown émoji Boss"
+    }
 }``
 
 
