@@ -539,7 +539,7 @@ class Admin_command(commands.Cog):
                         "SpecialS" : 0,
                         "DivinityS" : 0,
                         "Boss" : 0,
-                        yokai : class_name
+                        yokai : [class_name]
                     }
                 inv[class_id] = 1
                 await save_inv(data=inv, id=input_id)
@@ -560,7 +560,7 @@ class Admin_command(commands.Cog):
                 except KeyError:
                     #return an exception if the yokai was not in the inv
                     #add it
-                    inv[yokai] = class_id
+                    inv[yokai] = [class_id]
                     #add one more to the yokai count of the coresponding class
                     inv[class_id] += 1
                 #save the inv
