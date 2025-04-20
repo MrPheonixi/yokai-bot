@@ -406,7 +406,7 @@ class Admin_command(commands.Cog):
                 brute_inventory = {}
                 await save_inv(brute_inventory, input_id)
                 sucess_embed = discord.Embed(
-                    title="Le Médallium de cette utilisateur a été vider !",
+                    title="Le Médallium de cette utilisateur a été vidé !",
                     color= discord.Color.green()
                 )
                 #Log
