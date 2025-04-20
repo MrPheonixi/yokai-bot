@@ -715,6 +715,7 @@ class Medallium(commands.Cog) :
                                             
                                     inv_embed.add_field(name=f"Rang {classes_name} `{brute_inventory[class_id]}/{list_len[class_id]}`",
                                                         value=yokai_list_formated)
+                                    inv_embed.set_author(name=f"Médallium de {user.name}")
                             return await interaction.response.send_message(embed=inv_embed)
                         except discord.errors.HTTPException as e:
                             error_embed =  discord.Embed(color=discord.Color.red(),
@@ -747,7 +748,7 @@ class Medallium(commands.Cog) :
                                                 color=discord.Color.from_str(yokai_data[class_id]["color"])
                                                 )
                             inv_embed.set_thumbnail(url=image_link[class_id])
-                            inv_embed.set_author(name=f"Médallium de {ctx.author.name}")
+                            inv_embed.set_author(name=f"Médallium de {user.name}")
                             return await interaction.response.send_message(embed=inv_embed)
                         else:
                             if user.id == ctx.author.id:
@@ -1081,10 +1082,10 @@ class Yokai(commands.Cog):
                 
                 #verify if the cooldown is bypassed ?
                 iscooldown = True
-                for ids in team_member_id :
+                """for ids in team_member_id :
                     if ctx.author.id == ids :
                         iscooldown = False
-                        break
+                        break"""
 
                 
                 if iscooldown == True :
