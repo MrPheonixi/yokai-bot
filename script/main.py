@@ -1197,6 +1197,8 @@ class Yokai(commands.Cog):
                     await save_inv(brute_inventory,  ctx.author.id)
                     yokai_embed.add_field(name="Vous ne l'avez jamais eu !", value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir.")
 
+                #Futur update
+                yokai_embed.set_author(name="Attention, cette commande sera renomée /bingo-kai.")
                           
                 await send_embed(ctx, yokai_embed)
                 
