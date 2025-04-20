@@ -512,7 +512,7 @@ class Admin_command(commands.Cog):
             
             #Verify if the class (rang) is fine :
             class_name = rang
-            class_id = classid_to_class(class_name)
+            class_id = classid_to_class(class_name, True)
             if class_id == "" :
                 #if the class does not exist, it return "" and we can catch it
                 error_embed = discord.Embed(
@@ -577,6 +577,13 @@ class Admin_command(commands.Cog):
         except Exception as e :
             error = await mk_error_file(e, ctx, command="give")
             bot_logger.error(error)
+        
+        
+        
+        
+        
+        
+        
         
         
 #Medallium command cog
