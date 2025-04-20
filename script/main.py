@@ -52,6 +52,8 @@ bot_logger.addHandler(bot_handler1)
 
 
 
+
+
 #Get inv func
 async def get_inv(id : int):
     if os.path.exists(f"./files/inventory/{str(id)}.json"):
@@ -63,10 +65,14 @@ async def get_inv(id : int):
        
     return data
 
+
+
 #save inv func
 async def save_inv(data : dict, id : int):
     with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+
 
 
 
@@ -78,10 +84,16 @@ def get_data(path : str) -> dict:
        
     return data
 
+
+
+
 #A func to save dict data into .json
 def save_data(path : str, data : dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+
+
 
 # Get configuration.json
 with open("./files/configuration.json", "r") as config:
@@ -89,6 +101,8 @@ with open("./files/configuration.json", "r") as config:
     token = config_data["token"]
     prefix = config_data["prefix"]
     team_member_id = config_data["team_members_id"]
+  
+  
     
 #Get Yo-kai lists :
 with open("./files/yokai_list.json") as yokai_list:
@@ -110,6 +124,8 @@ with open("./files/yokai_list.json") as yokai_list:
 Class_list = ['E', 'D', 'C', 'B', 'A', 'S', 'LegendaryS', "treasureS", "SpecialS", 'DivinityS', "Boss"]
 Proba_list = [0.4175, 0.2, 0.12, 0.12, 0.08, 0.04, 0.0075, 0.0075, 0.0075, 0.005, 0.0025]
 
+
+
 #A func that convert class-id to class name and reverse
 def classid_to_class(id, reverse : bool = False):
     if reverse == False :
@@ -118,6 +134,11 @@ def classid_to_class(id, reverse : bool = False):
         for classes in yokai_data :
             if yokai_data[classes]["class_name"] == id :
                 return classes
+        
+    #return nothing if the id or the name was not fund    
+    return ""
+
+
 
 
 
@@ -131,6 +152,8 @@ with open("./files/bot-data.json") as bot_data:
     emoji = {}
     for emojis in bot_data["emoji"] :
         emoji[emojis] = bot_data["emoji"][emojis]
+
+
 
 # Embeds
 async def send_embed(ctx, embed):
@@ -460,6 +483,100 @@ class Admin_command(commands.Cog):
             bot_logger.error(error)
             
         
+        
+        
+        
+    @commands.command(name="give")
+    async def give(self, ctx, input_id : int, yokai : str, rang : str):
+        """
+        Give un Yo-kai à un utilisateur donné.
+        `.give {id de l'utilisateur} {"yokai"} {rang}`
+        """
+        
+        try :
+            #verify if author is in the Admin list.
+            verify = False
+            for ids in team_member_id :
+                if ctx.author.id == ids :
+                    verify = True
+                    break
+                    
+            if verify == False :
+                error_embed = discord.Embed(
+                    title="Vous n'êtes pas dans l'équipe de développement.",
+                    description="Vous n'avez pas la permission de faire ceci !",
+                    color= discord.Color.red()
+                )
+                bot_logger.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give dans {ctx.guild.name}, sur l'input {input}")
+                return await send_embed(ctx, error_embed)
+            
+            #Verify if the class (rang) is fine :
+            class_name = rang
+            class_id = classid_to_class(class_name)
+            if class_id == "" :
+                #if the class does not exist, it return "" and we can catch it
+                error_embed = discord.Embed(
+                    title="Le rang fourni n'est pas valide.",
+                    description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                    color= discord.Color.red()
+                )
+                return await send_embed(ctx, error_embed)
+            
+            
+            #Verify if the input id has an inventory file :
+            inv = await get_inv(input_id)
+            if inv == {}:
+                inv = {
+                        "last_claim" : 10000,
+                        "E" : 0,
+                        "D" : 0,
+                        "C" : 0,
+                        "B" : 0,
+                        "A" : 0,
+                        "S" : 0,
+                        "LegendaryS" : 0,
+                        "treasureS" : 0,
+                        "SpecialS" : 0,
+                        "DivinityS" : 0,
+                        "Boss" : 0,
+                        yokai : class_name
+                    }
+                inv[class_id] = 1
+                await save_inv(data=inv, id=input_id)
+                
+            else :
+                #we have to verify :
+                # 1. If the yokai is already in the inv
+                # 2. If yes, if there is already many oh this yokai
+                try:
+                    inv[yokai]
+                    try:
+                        #stack the yokai
+                        inv[yokai][1] += 1
+                    except :
+                        #return an exception if the yokai was not stacked
+                        #so we know there is only one and we can add the mention of two yokai ( .append(2) )
+                        inv[yokai].append(2)
+                except KeyError:
+                    #return an exception if the yokai was not in the inv
+                    #add it
+                    inv[yokai] = class_id
+                    #add one more to the yokai count of the coresponding class
+                    inv[class_id] += 1
+                #save the inv
+                await save_inv(data=inv, id=input_id)
+                
+            sucess_embed = discord.Embed(title=f"Le Yo-Kai a été ajouté à l'inventaire de {input_id}",
+                                         color=discord.Color.green(),
+                                         description=f"**{yokai}** de rang **{rang}**"
+                                         )
+            return await ctx.send(embed=sucess_embed)
+                
+                
+        #Main exception
+        except Exception as e :
+            error = await mk_error_file(e, ctx, command="give")
+            bot_logger.error(error)
         
         
 #Medallium command cog
@@ -952,7 +1069,7 @@ class Yokai(commands.Cog):
                 brute_inventory = await get_inv(ctx.author.id)
                 
                 
-                #verify if the cooldown is bypass ?
+                #verify if the cooldown is bypassed ?
                 iscooldown = True
                 """for ids in team_member_id :
                     if ctx.author.id == ids :
