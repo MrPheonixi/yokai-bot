@@ -652,6 +652,16 @@ class Medallium(commands.Cog) :
                     # yokai_per_class[categorie[0]].append(elements)
                     yokai_per_class[categorie[0]][elements] = count
                     
+            #sort the list alphabeticaly :
+            for non_sorted_dicts in yokai_per_class :
+                #get the key of teh dict and sort them
+                list_key = list(yokai_per_class[non_sorted_dicts].keys())
+                list_key.sort()
+                
+                #put the key in a dict
+                sorted_dict = {i : yokai_per_class[non_sorted_dicts][i] for i in list_key}
+                yokai_per_class[non_sorted_dicts] = sorted_dict
+                    
             
             #Ask wich categorie the user want to show ?
             
@@ -1071,10 +1081,10 @@ class Yokai(commands.Cog):
                 
                 #verify if the cooldown is bypassed ?
                 iscooldown = True
-                """for ids in team_member_id :
+                for ids in team_member_id :
                     if ctx.author.id == ids :
                         iscooldown = False
-                        break"""
+                        break
 
                 
                 if iscooldown == True :
