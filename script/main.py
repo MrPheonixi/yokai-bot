@@ -507,7 +507,7 @@ class Admin_command(commands.Cog):
                     description="Vous n'avez pas la permission de faire ceci !",
                     color= discord.Color.red()
                 )
-                bot_logger.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give dans {ctx.guild.name}, sur l'input {input}")
+                bot_logger.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give dans {ctx.guild.name}, sur l'input {input_id}")
                 return await send_embed(ctx, error_embed)
             
             #Verify if the class (rang) is fine :
@@ -570,6 +570,7 @@ class Admin_command(commands.Cog):
                                          color=discord.Color.green(),
                                          description=f"**{yokai}** de rang **{rang}**"
                                          )
+            bot_logger.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}")
             return await ctx.send(embed=sucess_embed)
                 
                 
@@ -1214,18 +1215,17 @@ class Yokai(commands.Cog):
             error = await mk_error_file(e, ctx, command="yokai")
             bot_logger.error(error)
 
-        
-        
-        
-            
-        
-        
-    
-    
-      
-      
-      
-                    
+
+
+
+
+
+
+
+
+
+
+
 ## create bot
 
 class Yokai_bot(commands.Bot):
