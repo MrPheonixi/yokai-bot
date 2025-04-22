@@ -584,9 +584,9 @@ class Admin_command(commands.Cog):
                     #save the inv
                     await save_inv(data=inv, id=input_id)
                 
-            sucess_embed = discord.Embed(title=f"Le Yo-Kai a été ajouté à l'inventaire de {input_id}",
+            sucess_embed = discord.Embed(title=f"Le(s) Yo-Kai a été ajouté au Médallium de {input_id}",
                                          color=discord.Color.green(),
-                                         description=f"**{yokai}** de rang **{rang}**"
+                                         description=f"**{yokai}** de rang **{rang}**\n> quantité : {number}"
                                          )
             bot_logger.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}")
             return await ctx.send(embed=sucess_embed)
@@ -597,7 +597,135 @@ class Admin_command(commands.Cog):
             error = await mk_error_file(e, ctx, command="give")
             bot_logger.error(error)
         
+    
+    
+    
+    
+    @commands.command(name="remove")
+    async def remove(self, ctx, input_id : int, yokai : str, rang : str, number = "1"): 
+        """
+        Remove un Yo-kai à un utilisateur donné.
+        `.give {id de l'utilisateur} {"yokai"} {rang}`
+        """
         
+        try :
+            
+            #first of all, format the input:
+            try :
+                number = int(number)
+            
+            except :
+                error_embed = discord.Embed(
+                        title="La quantité fournie n'est pas valide.",
+                        description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                        color= discord.Color.red()
+                    )
+                return await send_embed(ctx, error_embed)
+            
+            
+            #verify if author is in the Admin list.
+            verify = False
+            for ids in team_member_id :
+                if ctx.author.id == ids :
+                    verify = True
+                    break
+                    
+            if verify == False :
+                error_embed = discord.Embed(
+                    title="Vous n'êtes pas dans l'équipe de développement.",
+                    description="Vous n'avez pas la permission de faire ceci !",
+                    color= discord.Color.red()
+                )
+                bot_logger.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give sur l'input {input_id},  le yokai {yokai}, la quantité {number}")
+                return await send_embed(ctx, error_embed)
+            
+            #Verify if the class (rang) is fine :
+            class_name = rang
+            class_id = classid_to_class(class_name, True)
+            if class_id == "" :
+                #if the class does not exist, it return "" and we can catch it
+                error_embed = discord.Embed(
+                    title="Le rang fourni n'est pas valide.",
+                    description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                    color= discord.Color.red()
+                )
+                return await send_embed(ctx, error_embed)
+            
+            
+            #Verify if the input id has an inventory file :
+            inv = await get_inv(input_id)
+            if inv == {}:
+                error_embed = discord.Embed(
+                    title=f"Ce Yo-kai n'est pas dans le Médallium de {input_id}",
+                    description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                    color= discord.Color.red()
+                )
+                return await send_embed(ctx, error_embed)
+                
+            else :
+                #we have to verify :
+                # 1. If the yokai is already in the inv
+                # 2. If yes, if there is already many oh this yokai
+                # and we do it in range(number) to delete several yokai
+                
+                for i in range(number) :
+                    try :
+                        one_more_author = inv[yokai][1] > 1
+                    
+                    
+                    except KeyError:
+                        error_embed = discord.Embed(
+                            title=f"Ce Yo-kai n'est pas dans le Médallium de {input_id}",
+                            description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                            color= discord.Color.red()
+                        )
+                        return await send_embed(ctx, error_embed)
+                    
+                    
+                    except IndexError :
+                        if number - i > 1 :
+                            error_embed = discord.Embed(
+                                title=f"Vous avez demandé plus de Yo-kai que il n'y en a dans ce Médallium.",
+                                description="Le nombre actuel dans le Médallium est : `1`",
+                                color= discord.Color.red()
+                            )
+                            return await send_embed(ctx, error_embed)
+                        one_more_author = False
+                        
+                    if one_more_author == True :
+                        if number - i > inv[yokai][1] :
+                            #return an error if the user want to remove more yokai than there is in the corespondign Medallium
+                            error_embed = discord.Embed(
+                                title=f"Vous avez demandé plus de Yo-kai que il n'y en a dans ce Médallium.",
+                                description=f"Le nombre actuel dans le Médallium est : `{inv[yokai][1]}`",
+                                color= discord.Color.red()
+                            )
+                            return await send_embed(ctx, error_embed)
+                            
+                            
+                        #just remove the mention of several yokai if there are juste two
+                        if inv[yokai][1] == 2:
+                            inv[yokai].remove(inv[yokai][1])
+                        else:
+                            inv[yokai][1] -= 1
+                                
+                    else :
+                        inv.pop(yokai)
+                        inv[class_id] -= 1
+                    await save_inv(data=inv, id=input_id)
+                
+            sucess_embed = discord.Embed(title=f"Le(s) Yo-Kai a été retiré du Médallium de {input_id}",
+                                         color=discord.Color.green(),
+                                         description=f"**{yokai}** de rang **{rang}** \n> quantité : {number} "
+                                         )
+            bot_logger.warning(msg=f"{ctx.author.name} a utilisé le /remove sur l'id {input_id}, le yokai {yokai}, la quantité {number}")
+            return await ctx.send(embed=sucess_embed)
+                
+                
+        #Main exception
+        except Exception as e :
+            error = await mk_error_file(e, ctx, command="remove")
+            bot_logger.error(error)
         
         
         
