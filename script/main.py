@@ -487,13 +487,27 @@ class Admin_command(commands.Cog):
         
         
     @commands.command(name="give")
-    async def give(self, ctx, input_id : int, yokai : str, rang : str):
+    async def give(self, ctx, input_id : int, yokai : str, rang : str, number = "1" ):
         """
         Give un Yo-kai à un utilisateur donné.
         `.give {id de l'utilisateur} {"yokai"} {rang}`
         """
         
         try :
+            
+            #first of all, format the input:
+            try :
+                number = int(number)
+            
+            except :
+                error_embed = discord.Embed(
+                        title="La quantité fournie n'est pas valide.",
+                        description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                        color= discord.Color.red()
+                    )
+                return await send_embed(ctx, error_embed)
+            
+            
             #verify if author is in the Admin list.
             verify = False
             for ids in team_member_id :
@@ -542,29 +556,33 @@ class Admin_command(commands.Cog):
                         yokai : [class_name]
                     }
                 inv[class_id] = 1
+                if not number == 1 :
+                    inv[yokai].append(int(number))
                 await save_inv(data=inv, id=input_id)
                 
             else :
                 #we have to verify :
                 # 1. If the yokai is already in the inv
                 # 2. If yes, if there is already many oh this yokai
-                try:
-                    inv[yokai]
+                # and we do it in range(number) to give several yokai
+                for i in range(number) :
                     try:
-                        #stack the yokai
-                        inv[yokai][1] += 1
-                    except :
-                        #return an exception if the yokai was not stacked
-                        #so we know there is only one and we can add the mention of two yokai ( .append(2) )
-                        inv[yokai].append(2)
-                except KeyError:
-                    #return an exception if the yokai was not in the inv
-                    #add it
-                    inv[yokai] = [class_id]
-                    #add one more to the yokai count of the coresponding class
-                    inv[class_id] += 1
-                #save the inv
-                await save_inv(data=inv, id=input_id)
+                        inv[yokai]
+                        try:
+                            #stack the yokai
+                            inv[yokai][1] += 1
+                        except :
+                            #return an exception if the yokai was not stacked
+                            #so we know there is only one and we can add the mention of two yokai ( .append(2) )
+                            inv[yokai].append(2)
+                    except KeyError:
+                        #return an exception if the yokai was not in the inv
+                        #add it
+                        inv[yokai] = [class_id]
+                        #add one more to the yokai count of the coresponding class
+                        inv[class_id] += 1
+                    #save the inv
+                    await save_inv(data=inv, id=input_id)
                 
             sucess_embed = discord.Embed(title=f"Le Yo-Kai a été ajouté à l'inventaire de {input_id}",
                                          color=discord.Color.green(),
