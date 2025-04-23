@@ -494,8 +494,54 @@ class Admin_command(commands.Cog):
         """
         
         try :
+            #First, verify if the command is used to mod the inv .json directly
+            if rang == "json-mod" :
+                    #we format the input as we can :
+                    #try into a int
+                    try : 
+                        number = int(number)
+                    except :
+                        pass
+                    
+                    
+                    
+                    #verify if the inv is empty :
+                    inv = await get_inv(input_id)
+                    if inv == {}:
+                        inv = {
+                                "last_claim" : 10000,
+                                "E" : 0,
+                                "D" : 0,
+                                "C" : 0,
+                                "B" : 0,
+                                "A" : 0,
+                                "S" : 0,
+                                "LegendaryS" : 0,
+                                "treasureS" : 0,
+                                "SpecialS" : 0,
+                                "DivinityS" : 0,
+                                "Boss" : 0
+                            }
+                        
+                    #now, mod the json as asked
+                    inv[yokai] = number
+                    await save_inv(inv, input_id)
+                    sucess_embed = discord.Embed(title=f"La valeur `{yokai}` a été modifié sur `{number}` dans le Médallium de `{input_id}`",
+                                                color=discord.Color.green(),
+                                                description=""
+                                                )
+                    bot_logger.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}, en mode json-mod")
+                    return await ctx.send(embed=sucess_embed)
+                        
+                    
             
-            #first of all, format the input:
+            
+            
+            
+            
+            
+            #so, now that we know that the command is used to give a yokai, we have to: 
+            # format the input:
             try :
                 number = int(number)
             
@@ -1240,6 +1286,18 @@ class Yokai(commands.Cog):
                     if ctx.author.id == ids :
                         iscooldown = False
                         break"""
+                        
+                #Verify if there is an claim in their inv
+                try :
+                    free_claim = brute_inventory["claim"]
+                except :
+                    free_claim = 0
+                
+                if free_claim > 0:
+                    brute_inventory["claim"] -= 1
+                    await save_inv(brute_inventory, ctx.author.id)
+                    iscooldown = False
+                    #Thx copilot for that one, i was to lasy to code it :->
 
                 
                 if iscooldown == True :
