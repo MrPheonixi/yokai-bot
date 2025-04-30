@@ -202,7 +202,7 @@ async def mk_error_file(error, ctx, command):
     error_embed.add_field(name="Information :",
                           value=f"> - Code d'erreur : {file_name}")
     error_embed.add_field(name="Merci de transmettre le code d'erreur à :",
-                          value="> **DM :** `__hubble` \n > **Serveur discord :** https://discord.gg/K4H4xhHqUb",
+                          value="> **DM :** `__hubble`",
                           inline=False)
     await ctx.send(embed=error_embed)
     return error_info
