@@ -510,17 +510,8 @@ class Admin_command(commands.Cog):
                 bot_logger.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give dans {ctx.guild.name}, sur l'input {input_id}")
                 return await send_embed(ctx, error_embed)
             
-            #Verify if the class (rang) is fine :
-            class_name = rang
-            class_id = classid_to_class(class_name, True)
-            if class_id == "" :
-                #if the class does not exist, it return "" and we can catch it
-                error_embed = discord.Embed(
-                    title="Le rang fourni n'est pas valide.",
-                    description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
-                    color= discord.Color.red()
-                )
-                return await send_embed(ctx, error_embed)
+            
+            
             
             
             #First, verify if the command is used to mod the inv .json directly
@@ -581,6 +572,25 @@ class Admin_command(commands.Cog):
                         color= discord.Color.red()
                     )
                 return await send_embed(ctx, error_embed)
+            
+            
+            
+            
+            
+            
+            #Verify if the class (rang) is fine :
+            class_name = rang
+            class_id = classid_to_class(class_name, True)
+            if class_id == "" :
+                #if the class does not exist, it return "" and we can catch it
+                error_embed = discord.Embed(
+                    title="Le rang fourni n'est pas valide.",
+                    description="Merci de verifier si la commande est utilisée de manière valide (`/help Admin_command`)",
+                    color= discord.Color.red()
+                )
+                return await send_embed(ctx, error_embed)
+            
+
             
             
             
