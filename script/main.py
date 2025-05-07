@@ -793,7 +793,7 @@ class Admin_command(commands.Cog):
 #Medallium command cog
 class Medallium(commands.Cog) :
     """
-    Permet de voir votre Médallium (inventaire), tous les Yo-kai que vous avez eu avec le /yokai.
+    Permet de voir votre Médallium (inventaire), tous les Yo-kai que vous avez eu avec le /bingo-kai.
     """
     
     
@@ -804,7 +804,7 @@ class Medallium(commands.Cog) :
     @commands.hybrid_command(name="medallium")
     async def medallium(self, ctx, user : discord.User = None ):
         """
-        Permet de voir votre Médallium (inventaire), tous les Yo-kai que vous avez eu avec le /yokai. 
+        Permet de voir votre Médallium (inventaire), tous les Yo-kai que vous avez eu avec le /bingo-kai. 
         Utilisez */medallium {user}* pour voir le Médallium d'un autre utilisateur.
         """
         try :
@@ -1129,7 +1129,7 @@ class Trade(commands.Cog):
                 if recipient_inv == {} :
                     error_embed = discord.Embed(color=discord.Color.red(),
                                         title=f"Le Medallium de {destinataire.name} est vide !",
-                                        description="On va dire que j'avais la flemme de gérer ce cas, dcp dites lui de faire /yokai et relancez la commande svp."
+                                        description="On va dire que j'avais la flemme de gérer ce cas, dcp dites lui de faire /bingo-kai et relancez la commande svp."
                                         )
                     return await ctx.send(embed = error_embed)
 
@@ -1435,7 +1435,7 @@ class Yokai(commands.Cog):
                                             color=discord.Color.from_str(yokai_data[class_id]["color"])
                                             )
                 yokai_embed.set_thumbnail(url=image_link[class_id])
-                bot_logger.info(f"{ctx.author.name} a utilisé le /yokai dans {ctx.guild.name}, il a eu {Yokai_choice}, de rang {class_name}")
+                bot_logger.info(f"{ctx.author.name} a utilisé le /bingo-kai dans {ctx.guild.name}, il a eu {Yokai_choice}, de rang {class_name}")
                 
                 #is the Yo-kai in the inventory
                 #try the inv
@@ -1495,15 +1495,17 @@ class Yokai(commands.Cog):
                     await save_inv(brute_inventory,  ctx.author.id)
                     yokai_embed.add_field(name="Vous ne l'avez jamais eu !", value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir.")
 
-                #Futur update
-                yokai_embed.set_author(name="Attention, cette commande sera renomée /bingo-kai.")
+
                           
                 await send_embed(ctx, yokai_embed)
                 
         #Main exception
         except Exception as e :
-            error = await mk_error_file(e, ctx, command="yokai")
+            error = await mk_error_file(e, ctx, command="bingo-kai")
             bot_logger.error(error)
+            
+            
+            
             
     @commands.hybrid_command(name="yokai")
     async def yokai(self, ctx) :
@@ -1544,7 +1546,7 @@ class Yokai_bot(commands.Bot):
        
     async def on_ready(self):
         print(f"We have logged in as {bot.user}")
-        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name =f"/yokai || /help"))
+        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name =f"/bingo-kai || /help"))
         print(discord.__version__)
        
        
