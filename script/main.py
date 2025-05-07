@@ -1355,8 +1355,8 @@ class Yokai(commands.Cog):
         self.bot = bot
 
 
-    @commands.hybrid_command(name="yokai")
-    async def yokai(self, ctx):
+    @commands.hybrid_command(name="bingo-kai")
+    async def bingo_yokai(self, ctx):
         """
         **Tire au sort un Yo-kai de manière aléatoire.**
         La commande possède un cooldown de 1h30 (1h sur le serveur de support ;) )
@@ -1504,6 +1504,15 @@ class Yokai(commands.Cog):
         except Exception as e :
             error = await mk_error_file(e, ctx, command="yokai")
             bot_logger.error(error)
+            
+    @commands.hybrid_command(name="yokai")
+    async def yokai(self, ctx) :
+        error_embed = discord.Embed(color=discord.Color.red(),
+                        title=f"Cette commande n'existe plus !",
+                        description="Elle s'appelle maintenant /bingo-kai."
+                        )
+        return await ctx.send(embed = error_embed)
+        
 
 
 
