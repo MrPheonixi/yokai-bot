@@ -15,7 +15,7 @@ import os
 
 # A Quark group bot
 # Quark-dev.com---2024
-VERSION = "3.5"
+VERSION = "4"
 
 # LOG system
 
