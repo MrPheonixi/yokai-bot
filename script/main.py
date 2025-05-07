@@ -1513,6 +1513,7 @@ class Yokai(commands.Cog):
                         title=f"Cette commande n'existe plus !",
                         description="Elle s'appelle maintenant /bingo-kai."
                         )
+        error_embed.add_field(name="__Solutions :__", value="> Faite `/bingo-kai`. \n> Faite `.bingo-kai` si la commande / ne s'affiche pas.")
         return await ctx.send(embed = error_embed)
         
 
