@@ -23,8 +23,8 @@ def get_inv(id : str):
 
 
 #save inv func
-def save_inv(data : dict, id : int):
-    with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
+def save_inv(data : dict, id : str):
+    with open(f"./files/inventory/{id}.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
 
@@ -61,7 +61,67 @@ Class_list = ['E', 'D', 'C', 'B', 'A', 'S', 'LegendaryS', "treasureS", "SpecialS
 Proba_list = [0.4175, 0.2, 0.12, 0.12, 0.08, 0.04, 0.0075, 0.0075, 0.0075, 0.005, 0.0025]   
         
         
+def adjust():
+    line(35)
+    print("Welcome to the ajustement program !")
+    while True :
+        print("Please, select a mode :")
+        print("   [1] Total number of yokai. \n   [2] Yokai replacement.")
+        line()
+        choise = input("Please, select a number [1-2] ")
+    
+        if choise == "1" or choise == "2" :
+            choise = int(choise)
+            break
+    
+        print("The number isn't right, please enter a number in range [1-2]")
+        input("Press any key to go back to the menu.")
+    
+    
+    if choise == 1:
+        corrected_classes = 0
         
+        for dirpath, dirnames, filenames in os.walk("./files/inventory"):
+            for file in filenames :
+                yokai_per_class = {
+                    "E" : 0,
+                    "D" : 0,
+                    "C" : 0,
+                    "B" : 0,
+                    "A" : 0,
+                    "S" : 0,
+                    "LegendaryS" : 0,
+                    "treasureS" : 0,
+                    "SpecialS" : 0,
+                    "DivinityS" : 0,
+                    "Boss" : 0
+                }
+                current_inv = get_inv(file.strip(".json"))
+                if current_inv != {} :
+                    for yokai in current_inv :
+                        #check if the yokai is part of the inv system
+                        if yokai in ["E", "D", "C", "B", "A", "S", "LegendaryS", "treasureS", "SpecialS", "DivinityS", "Boss", "last_claim", "", "claim"] :
+                            pass
+                        
+                        else :
+                            yokai_class = current_inv[yokai][0]
+                            yokai_per_class[yokai_class] += 1
+                    
+                    for classes in yokai_per_class :
+                        if yokai_per_class[classes] != current_inv[classes]:
+                            current_inv[classes] = yokai_per_class[classes]
+                            corrected_classes += 1
+                        
+                    save_inv(current_inv, file.strip(".json"))
+                
+        print("The inventorys have been adjusted sucessfully !")
+        print(f"{corrected_classes} total were adjusted")
+        input("Press any key to go back to the main menu.")
+        return
+         
+         
+         
+         
 
 
 def inv_info():
@@ -187,7 +247,8 @@ def key_manager():
 
 func_list = {
     1 : "inv_info()",
-    2 : "key_manager()"
+    2 : "key_manager()",
+    3 : "adjust()"
 }
 
 line(35)
@@ -199,12 +260,13 @@ while True :
     print("Choose something you want to do :")
     print("[1] Show the inv folder info.")
     print("[2] Key manager.")
+    print("[3] Inv adjust.")
     
     
-    choise_range = "[1-2]"
+    choise_range = "[1-3]"
     choise = input(f"Please select a number [{choise_range}] : ")
 
-    if int(choise) in [1, 2] :
+    if int(choise) in [1, 2, 3] :
         exec(func_list[int(choise)])
     else :
         print(f"The number isn't right, please enter a number in range [{choise_range}]")
