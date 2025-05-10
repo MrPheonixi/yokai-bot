@@ -1355,7 +1355,7 @@ class Yokai(commands.Cog):
         self.bot = bot
 
 
-    @commands.hybrid_command(name="bingo-kai")
+    @commands.hybrid_command(name="bingo-kai",)
     async def bingo_yokai(self, ctx):
         """
         **Tire au sort un Yo-kai de manière aléatoire.**
@@ -1504,7 +1504,10 @@ class Yokai(commands.Cog):
             error = await mk_error_file(e, ctx, command="bingo-kai")
             bot_logger.error(error)
             
-            
+    
+    @commands.hybrid_command(name="bkai")
+    async def bkai(self, ctx):
+        await self.bingo_yokai(ctx)
             
             
     @commands.hybrid_command(name="yokai")
