@@ -1,3 +1,4 @@
 #Privates files
 configuration.json
 bot-data.json
+.env
