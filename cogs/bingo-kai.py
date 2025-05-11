@@ -113,6 +113,7 @@ class Yokai(commands.Cog):
             color=discord.Color.from_str(self.bot.yokai_data[class_id]["color"])
         )
         yokai_embed.set_thumbnail(url=self.bot.image_link[class_id])
+        yokai_embed.set_footer(text="Essaye de faire /bkai :eyes:")
         if ctx.guild is not None:
             self.bot.logger.info(
                 f"Executed bingo-kai command in {ctx.guild.name} (ID: {ctx.guild.id}) by {ctx.author} (ID: {ctx.author.id}) // He had '{Yokai_choice}' / Rank: {class_name}"
@@ -185,7 +186,6 @@ class Yokai(commands.Cog):
                 name="Vous ne l'avez jamais eu !",
                 value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir."
             )
-        yokai_embed.set_footer(text="Essaye de faire /bkai :eyes:")
         await ctx.send(embed=yokai_embed)
 
                 
