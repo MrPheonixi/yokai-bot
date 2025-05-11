@@ -9,8 +9,6 @@
 
 ```
 {
-    "token" : "Votre token",
-    "prefix" : ".",
     "team_members_id" : [ID Discord des personnes pouvant exécuter des commandes d'administration.]
 }
 ```
@@ -50,13 +48,16 @@
 }
 ```
 
+- Créer un fichier `./.env` tel que le fichier `.env.example` qui est fourni dans le git.
+
+
 
 
 ## Informations :
 Dans le code, le "rang" d'un Yo-kai est appelé "class".
 
-Vous pouvez executer `./script/main.py` pour lancer le bot
-*Attention à executer le script depuis le bon dossier, il ne faut pas executer le script autrement que part `./script/main.py` (par exemple, `main.py` directement dans le dossier `./script`) sans modifier le code.*
+Vous pouvez executer `./bot.py` pour lancer le bot
+*Attention à executer le script depuis le bon dossier, il ne faut pas executer le script autrement que part `./bot.py` (par exemple, `./yokai bot/main.py` dans un dossier parent a celui de `bot.py`) sans modifier le code.*
 
 **--> Le code ne semble pas fonctionner sous windows pour la fonction `classid_to_class(str(), true)`, il n'a aucun problème sous linux/debian.**
 
