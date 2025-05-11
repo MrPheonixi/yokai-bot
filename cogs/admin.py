@@ -212,7 +212,7 @@ class Admin_command(commands.Cog):
                                                 color=discord.Color.green(),
                                                 description=""
                                                 )
-                    self.bot.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}, en mode json-mod")
+                    self.bot.logger.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}, en mode json-mod")
                     return await ctx.send(embed=sucess_embed)
                         
                     
@@ -307,7 +307,7 @@ class Admin_command(commands.Cog):
                                          color=discord.Color.green(),
                                          description=f"**{yokai}** de rang **{rang}**\n> quantité : {number}"
                                          )
-            self.bot.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}")
+            self.bot.logger.warning(msg=f"{ctx.author.name} a utilisé le /give sur l'id {input_id}")
             return await ctx.send(embed=sucess_embed)
                 
                 
@@ -350,7 +350,7 @@ class Admin_command(commands.Cog):
                     description="Vous n'avez pas la permission de faire ceci !",
                     color= discord.Color.red()
                 )
-                self.bot.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give sur l'input {input_id},  le yokai {yokai}, la quantité {number}")
+                self.bot.logger.warning(f"{ctx.author.name} n'avais pas les permissions pour utiliser le /give sur l'input {input_id},  le yokai {yokai}, la quantité {number}")
                 return await ctx.send(embed=error_embed)
             
             #Verify if the class (rang) is fine :
@@ -432,7 +432,7 @@ class Admin_command(commands.Cog):
                                          color=discord.Color.green(),
                                          description=f"**{yokai}** de rang **{rang}** \n> quantité : {number} "
                                          )
-            self.bot.warning(msg=f"{ctx.author.name} a utilisé le /remove sur l'id {input_id}, le yokai {yokai}, la quantité {number}")
+            self.bot.logger.warning(msg=f"{ctx.author.name} a utilisé le /remove sur l'id {input_id}, le yokai {yokai}, la quantité {number}")
             return await ctx.send(embed=sucess_embed)
                 
                 
