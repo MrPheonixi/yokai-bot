@@ -1,7 +1,7 @@
 import json
 import time
 import os
-VERSION = 1
+VERSION = 2
 
 def line(num : int = 1):
     for i in range(num):
@@ -20,12 +20,22 @@ def get_inv(id : str):
        
     return data
 
+# Function to open JSON data
+def open_json(file_path: str):
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
 
+# Function to save JSON data
+def save_json(file_path: str, data: dict, ):
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 #save inv func
 def save_inv(data : dict, id : str):
     with open(f"./files/inventory/{id}.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def classid_to_class(id, reverse : bool = False):
@@ -244,11 +254,25 @@ def key_manager():
     input("End of the program, press any key to go back to the main menu.")
 
 
+def organise_list():
+    line(35)
+    yokai_list = open_json("./files/yokai_list.json")
+    
+    for classes in yokai_list:
+        yokais = yokai_list[classes]["yokai_list"]
+        yokais.sort()
+        yokai_list[classes]["yokai_list"] = yokais
+        
+    save_json("./files/yokai_list.json", yokai_list)
+    print("The json was sorted sucessfully !")
+    input("Press enter to go back to the main menu.")
+        
 
 func_list = {
     1 : "inv_info()",
     2 : "key_manager()",
-    3 : "adjust()"
+    3 : "adjust()",
+    4 : "organise_list()"
 }
 
 line(35)
@@ -261,12 +285,13 @@ while True :
     print("[1] Show the inv folder info.")
     print("[2] Key manager.")
     print("[3] Inv adjust.")
+    print("[4] Organise the list.")
     
     
-    choise_range = "[1-3]"
+    choise_range = "[1-4]"
     choise = input(f"Please select a number [{choise_range}] : ")
 
-    if int(choise) in [1, 2, 3] :
+    if int(choise) in [1, 2, 3, 4] :
         exec(func_list[int(choise)])
     else :
         print(f"The number isn't right, please enter a number in range [{choise_range}]")
