@@ -5,18 +5,25 @@ Version: 6.3.0
 """
 VERSION = 4
 
-
+#import general stuff
 import json
 import logging
 import os
 import platform
 import random
 import sys
+import traceback
 
-#import aiosqlite
+#import form the bot package
+from bot_package import Error_manager
+
+
+#imort discord stuff
 import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Context
+
+#imort .env stuff
 from dotenv import load_dotenv
 
 
@@ -332,7 +339,14 @@ class DiscordBot(commands.Bot):
             )
             await context.send(embed=embed)
         else:
-            raise error
+            raw_error = traceback.format_exception(error)
+            formated_error = ""
+            
+            for line in raw_error :
+                formated_error += line
+            
+            error_info = await Error_manager.mk_error_file(error_trace=formated_error, ctx=context, command=context.command.name)
+            self.logger.error(error_info)
 
     async def classid_to_class(self, id, reverse : bool = False):
         if reverse == False :
