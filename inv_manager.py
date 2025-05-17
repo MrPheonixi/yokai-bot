@@ -76,15 +76,15 @@ def adjust():
     print("Welcome to the ajustement program !")
     while True :
         print("Please, select a mode :")
-        print("   [1] Total number of yokai. \n   [2] Yokai replacement.")
+        print("   [1] Total number of yokai. \n   [2] Yokai replacement. \n   [3] Double Yokais ?")
         line()
-        choise = input("Please, select a number [1-2] ")
+        choise = input("Please, select a number [1-3] ")
     
-        if choise == "1" or choise == "2" :
+        if choise == "1" or choise == "2" or choise == "3":
             choise = int(choise)
             break
     
-        print("The number isn't right, please enter a number in range [1-2]")
+        print("The number isn't right, please enter a number in range [1-3]")
         input("Press any key to go back to the menu.")
     
     
@@ -123,11 +123,41 @@ def adjust():
                             corrected_classes += 1
                         
                     save_inv(current_inv, file.strip(".json"))
-                
-        print("The inventorys have been adjusted sucessfully !")
-        print(f"{corrected_classes} total were adjusted")
-        input("Press any key to go back to the main menu.")
-        return
+                    print("The inventorys have been adjusted sucessfully !")
+                    print(f"{corrected_classes} total were adjusted")
+                    
+    if choise == 2:
+        print("that func wasn't coded yet :/")
+            
+            
+    if choise == 3:
+        yokai_list = open_json("./files/yokai_list.json")
+        all_yokai = {}
+        for classes in yokai_list:
+            for yokai in yokai_list[classes]["yokai_list"]:
+                try :
+                    all_yokai[yokai].append(classes)
+                except:
+                    all_yokai[yokai] = [classes]
+        
+        double_yokai = ""
+        for yokai in all_yokai:
+            
+            if len(all_yokai[yokai]) > 1:
+                double_yokai_current = f"\n {yokai} : "
+                for classes in all_yokai[yokai]:
+                    double_yokai_current += f"{classid_to_class(classes)}/ "
+                double_yokai += double_yokai_current
+        
+        print("Here are the double yokai :")
+        print(double_yokai)
+                    
+            
+                                        
+        
+    line()
+    input("Press any key to go back to the main menu.")
+    return
          
          
          
@@ -250,8 +280,41 @@ def inv_info():
 
 
 def key_manager():
+    line(35)
     print("key manager")
+    while True :
+        print("Please, select a mode :")
+        print("   [1] Delete a yokai. \n   [2] Manage a key.")
+        line()
+        choise = input("Please, select a number [1-2] ")
+    
+        if choise == "1" or choise == "2" :
+            choise = int(choise)
+            break
+    
+    if choise == 1:
+        line()
+        chosen_yokai = input("Please, select the Yokai : ")
+        chosen_class = input("Please choose the rank of the yokai : ")
+        for dirpath, dirnames, filenames in os.walk("./files/inventory"):
+            for file in filenames :
+                id = file.strip(".json")
+                current_inv = get_inv(id)
+                new_inv = get_inv(id)
+                for yokai in current_inv :
+                    try :
+                        if yokai == chosen_yokai and current_inv[yokai][0] == chosen_class :
+                            new_inv.pop(yokai)
+                            print(f"The yokai {yokai} was removed for the inv of {id} !")
+                    except :
+                        pass
+                save_inv(new_inv, file.strip(".json"))
+        
+        print("The number isn't right, please enter a number in range [1-2]")
+        input("Press any key to go back to the menu.")
+    
     input("End of the program, press any key to go back to the main menu.")
+    
 
 
 def organise_list():
