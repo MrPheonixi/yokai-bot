@@ -341,15 +341,6 @@ class Yokai(commands.Cog):
 
         await ctx.send(embed=yokai_embed)
             
-            
-    @commands.hybrid_command(name="yokai")
-    async def yokai(self, ctx = commands.Context) :
-        error_embed = discord.Embed(color=discord.Color.red(),
-                        title=f"Cette commande n'existe plus !",
-                        description="Elle s'appelle maintenant /bingo-kai."
-                        )
-        error_embed.add_field(name="__Solutions :__", value="> Faites `/bingo-kai`. \n> Faites `.bingo-kai` si la commande / ne s'affiche pas.")
-        return await ctx.send(embed = error_embed)
     
 async def setup(bot) -> None:
     await bot.add_cog(Yokai(bot))
