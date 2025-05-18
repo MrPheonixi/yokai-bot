@@ -175,7 +175,7 @@ class Yokai(commands.Cog):
             await save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
-                value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir."
+                value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
             )
 
         else:
@@ -184,7 +184,7 @@ class Yokai(commands.Cog):
             await save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
-                value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir."
+                value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
             )
         await ctx.send(embed=yokai_embed)
 
@@ -327,7 +327,7 @@ class Yokai(commands.Cog):
             await save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
-                value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir."
+                value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
             )
 
         else:
@@ -336,7 +336,7 @@ class Yokai(commands.Cog):
             await save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
-                value="Il a été ajouté a votre Médallium. Faite `/medallium` pour le voir."
+                value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
             )
 
         await ctx.send(embed=yokai_embed)
@@ -348,7 +348,7 @@ class Yokai(commands.Cog):
                         title=f"Cette commande n'existe plus !",
                         description="Elle s'appelle maintenant /bingo-kai."
                         )
-        error_embed.add_field(name="__Solutions :__", value="> Faite `/bingo-kai`. \n> Faite `.bingo-kai` si la commande / ne s'affiche pas.")
+        error_embed.add_field(name="__Solutions :__", value="> Faites `/bingo-kai`. \n> Faites `.bingo-kai` si la commande / ne s'affiche pas.")
         return await ctx.send(embed = error_embed)
     
 async def setup(bot) -> None:
