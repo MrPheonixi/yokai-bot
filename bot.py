@@ -313,8 +313,10 @@ class DiscordBot(commands.Bot):
             
             for line in raw_error :
                 formated_error += line
-            
-            error_info = await Error_manager.mk_error_file(error_trace=formated_error, ctx=context, command=context.command.name)
+            try :
+                error_info = await Error_manager.mk_error_file(error_trace=formated_error, ctx=context, command=context.command.name)
+            except:
+                return
             self.logger.error(error_info)
 
     async def classid_to_class(self, id, reverse : bool = False):
