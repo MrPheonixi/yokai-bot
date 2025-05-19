@@ -311,7 +311,7 @@ class Trade(commands.Cog):
             if give == False :
                 success_embed = discord.Embed(colour=discord.Color.green(),
                                             title="__**Le trade a été effectué**__ ✅",
-                                            description="> Ci dessous vous pouvez vois le bilan du trade."
+                                            description="> Ci-dessous vous pouvez voir le bilan du trade."
                                             )
                 success_embed.add_field(name=f"{ctx.author.name} a eu le(s) Yo-kai :", value=asked_yokai_form, inline=False)
                 success_embed.add_field(name=f"{destinataire.name} a eu le(s) Yo-kai :", value=offered_yokai, inline=False)
@@ -321,7 +321,7 @@ class Trade(commands.Cog):
             else :
                 success_embed = discord.Embed(colour=discord.Color.green(),
                                             title="__**Le cadeau a bien été envoyé !**__ ✅",
-                                            description="> Ci dessous vous pouvez vois le bilan."
+                                            description="> Ci-dessous vous pouvez voir le bilan."
                                             )
                 success_embed.add_field(name=f"{destinataire.name} a eu le(s) Yo-kai :", value=offered_yokai, inline=False)
                 self.bot.logger.info(f"{ctx.author.name} a offert {ton_yokai} à {destinataire.name}, dans {ctx.guild.name}")
