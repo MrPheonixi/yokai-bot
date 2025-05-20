@@ -243,7 +243,8 @@ class DiscordBot(commands.Bot):
         full_command_name = context.command.qualified_name
         split = full_command_name.split(" ")
         executed_command = str(split[0])
-        if executed_command in ["bingo-kai", "bk", "trade"] :
+        #here add the commands with custom logging
+        if executed_command in ["bingo-kai", "bk", "trade", "cadeau"] :
             return
         if context.guild is not None:
             self.logger.info(

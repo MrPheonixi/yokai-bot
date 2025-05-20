@@ -40,7 +40,7 @@ class Yokai(commands.Cog):
     @commands.hybrid_command(name="bingo-kai",)
     async def bingo_yokai(self, ctx = commands.Context):
         """
-        **Tire au sort un Yo-kai de manière aléatoire.**
+        Tire au sort un Yo-kai de manière aléatoire.
         La commande possède un cooldown de 1h30 (1h sur le serveur de support ;) )
         """
                 #define the inv
