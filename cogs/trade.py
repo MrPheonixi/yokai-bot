@@ -117,6 +117,24 @@ class Trade(commands.Cog):
         if not recipient_have_it :
             return await ctx.send(embed=dont_have_it_embed("r"))
         
+        #Check for them in the queue:
+        for yokai in ton_yokai:
+            if yokai in await self.bot.trade_queue.show(id=ctx.author.id):
+                error_embed = discord.Embed(title="Vous ne pouvez pas offrir ce yo-kai !",
+                                            color=discord.Color.red(),
+                                            description="Vous avez déjà un cadeau / trade en cours avec ce yo-kai, merci de le finaliser avant de lancer ce trade."
+                                            )
+                return await ctx.send(embed=error_embed)
+            
+        for yokai in son_yokai:
+            if yokai in await self.bot.trade_queue.show(id=destinataire.id):
+                error_embed = discord.Embed(title="Vous ne pouvez pas demander ce yo-kai !",
+                                            color=discord.Color.red(),
+                                            description=f"{destinataire.name} a déjà un cadeau / trade en cours avec ce yo-kai, merci de le finaliser avant de lancer ce trade."
+                                            )
+                
+                return await ctx.send(embed=error_embed)
+        
         #format the asked yokai :      
         asked_yokai_form = ""
         for asked_yokai in son_yokai :
@@ -157,8 +175,13 @@ class Trade(commands.Cog):
         def reaction_check(reaction, user):
             return ask_message.id == reaction.message.id and (ctx.author == user and str(reaction.emoji) == "❌") or (destinataire == user and (str(reaction.emoji) == "✅" or str(reaction.emoji) == "❌"))
                        
+        #ADD the user to the queue
+        for i in ton_yokai:
+            await self.bot.trade_queue.add_member(id=ctx.author.id, yokai=i)
             
-            
+        for i in son_yokai:
+            await self.bot.trade_queue.add_member(id=destinataire.id, yokai=i)
+        
         try :
             #wait fot reaction
             reaction, reaction_user = await self.bot.wait_for("reaction_add", timeout= 60, check=reaction_check)
@@ -166,6 +189,13 @@ class Trade(commands.Cog):
             #what if no reaction after 30s
 
             denied_embed = discord.Embed(color=discord.Color.red(), title="🛑 Votre demande de trade a été annulée car aucune activité durant 1min.", description="Merci de relancer la commande")
+            
+            #remove the user from the queue
+            for i in ton_yokai:
+                await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
+                
+            for i in son_yokai:
+                await self.bot.trade_queue.delete(id=destinataire.id, yokai=i)
             
             return await ctx.send(embed=denied_embed)
         
@@ -175,15 +205,27 @@ class Trade(commands.Cog):
             denied_embed = discord.Embed(color=discord.Color.red(), title=" 🛑 Votre demande de trade a été annulée", description="Merci de relancer la commande si cela était une erreur.")
             self.bot.logger.info(f"{ctx.author.name} a annulée sa demande de trade avec {destinataire.name}, dans {ctx.guild.name}")
             
+            #remove the user from the queue
+            for i in ton_yokai:
+                await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
+                
+            for i in son_yokai:
+                await self.bot.trade_queue.delete(id=destinataire.id, yokai=i)
             
             return await ctx.send(embed=denied_embed)
         
         
-        
+        #what if the recipient refuse the request
         elif reaction_user.id == destinataire.id :
             if reaction.emoji == "❌":
                 denied_embed = discord.Embed(color=discord.Color.red(), title=" ❌ La demande de trade a été refusée", description="Merci de relancer la commande si cela était une erreur.")
                 self.bot.logger.info(f"{destinataire.name} a refusé la demande de trade de {ctx.author.name}, dans {ctx.guild.name}")
+                #remove the user from the queue
+                for i in ton_yokai:
+                    await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
+                    
+                for i in son_yokai:
+                    await self.bot.trade_queue.delete(id=destinataire.id, yokai=i)
                 return await ctx.send(embed=denied_embed)
         
         
@@ -259,6 +301,14 @@ class Trade(commands.Cog):
         #Save the inv
         await save_inv(author_inv, ctx.author.id)
         await save_inv(recipient_inv, destinataire.id)
+        
+        #remove the user from the queue
+        for i in ton_yokai:
+            await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
+            
+        for i in son_yokai:
+            await self.bot.trade_queue.delete(id=destinataire.id, yokai=i)
+        
             
         #send the success embed
         success_embed = discord.Embed(colour=discord.Color.green(),
@@ -335,11 +385,24 @@ class Trade(commands.Cog):
                                         )
             return await ctx.send(embed=error_embed)
         
+        #check in the queue
+        for yokai in ton_yokai:
+            if yokai in await self.bot.trade_queue.show(id=ctx.author.id):
+                error_embed = discord.Embed(title="Vous ne pouvez pas offrir ce yo-kai !",
+                                            color=discord.Color.red(),
+                                            description="Vous avez déjà un cadeau / trade en cours avec ce yo-kai, merci de le finaliser avant de lancer ce trade."
+                                            )
+                return await ctx.send(embed=error_embed)
+        
         #Format the offered yokai
         offered_yokai = ""
         for asked_yokai in ton_yokai :
             offered_yokai += f"> Le Yo-kai **{asked_yokai}** de rang **{await self.bot.classid_to_class(author_inv[asked_yokai][0])}**\n "
         
+        #ADD the user to the queue
+        for i in ton_yokai:
+            await self.bot.trade_queue.add_member(id=ctx.author.id, yokai=i)
+            
         
         ask_embed = discord.Embed(color=discord.Color.green(),
                                 title=f"{ctx.author.display_name} Fait un cadeau à {destinataire.display_name} !",
@@ -371,6 +434,10 @@ class Trade(commands.Cog):
             #what if no reaction after 1m
             denied_embed = discord.Embed(color=discord.Color.red(), title="🛑 Votre offre a été annulée car aucune activité durant 1min.", description="Merci de relancer la commande")
             
+            #remove the user from the queue
+            for i in ton_yokai:
+                await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
+            
             return await ctx.send(embed=denied_embed)
         
         #What if the author cancel the request
@@ -378,6 +445,10 @@ class Trade(commands.Cog):
 
             denied_embed = discord.Embed(color=discord.Color.red(), title=" 🛑 Votre offre a été annulée", description="Merci de relancer la commande si cela était une erreur.")
             self.bot.logger.info(f"{ctx.author.name} a annulée son cadeau pour {destinataire.name}, dans {ctx.guild.name}")
+            
+            #remove the user from the queue
+            for i in ton_yokai:
+                await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
             
             return await ctx.send(embed=denied_embed)
         
@@ -424,7 +495,10 @@ class Trade(commands.Cog):
         #Save the inv
         await save_inv(author_inv, ctx.author.id)
         await save_inv(recipient_inv, destinataire.id)
-            
+        
+        #remove the user from the queue
+        for i in ton_yokai:
+            await self.bot.trade_queue.delete(id=ctx.author.id, yokai=i)
         
         success_embed = discord.Embed(colour=discord.Color.green(),
                                     title="__**Le cadeau a bien été envoyé !**__ ✅",

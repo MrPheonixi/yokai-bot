@@ -16,7 +16,7 @@ import traceback
 
 #import form the bot package
 from bot_package import Error_manager
-
+from bot_package.Queue_manager import Queue
 
 #imort discord stuff
 import discord
@@ -168,6 +168,21 @@ class DiscordBot(commands.Bot):
         self.proba_list = proba_list
         self.image_link =  image_link
         self.emoji = emoji
+        
+        #queue for the trade command:
+        self.trade_queue = Queue()
+        
+        """
+        item in the trade queue should look like that :
+            user_id : [
+                yokai_traded1,
+                yokai_traded2
+            ],
+            user_id2 : [
+                yokai_traded1,
+                yokai_traded2
+            ]
+        """
         
         
         self.logger = logger
