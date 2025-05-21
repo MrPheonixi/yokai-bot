@@ -242,7 +242,7 @@ class Admin_command(commands.Cog):
             
             #Verify if the class (rang) is fine :
             class_name = rang
-            class_id = self.bot.classid_to_class(class_name, True)
+            class_id = await self.bot.classid_to_class(class_name, True)
             if class_id == "" :
                 #if the class does not exist, it return "" and we can catch it
                 error_embed = discord.Embed(
@@ -355,7 +355,7 @@ class Admin_command(commands.Cog):
             
             #Verify if the class (rang) is fine :
             class_name = rang
-            class_id = self.bot.classid_to_class(class_name, True)
+            class_id = await self.bot.classid_to_class(class_name, True)
             if class_id == "" :
                 #if the class does not exist, it return "" and we can catch it
                 error_embed = discord.Embed(
