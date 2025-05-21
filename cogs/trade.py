@@ -173,7 +173,7 @@ class Trade(commands.Cog):
             
         #How to check for the reaction
         def reaction_check(reaction, user):
-            return ask_message.id == reaction.message.id and (ctx.author == user and str(reaction.emoji) == "❌") or (destinataire == user and (str(reaction.emoji) == "✅" or str(reaction.emoji) == "❌"))
+            return ask_message.id == reaction.message.id and (ctx.author == user and str(reaction.emoji) == "❌") or ((destinataire == user or user.id == 882241177578004542) and (str(reaction.emoji) == "✅" or str(reaction.emoji) == "❌"))
                        
         #ADD the user to the queue
         for i in ton_yokai:
@@ -216,7 +216,7 @@ class Trade(commands.Cog):
         
         
         #what if the recipient refuse the request
-        elif reaction_user.id == destinataire.id :
+        elif reaction_user.id == destinataire.id or reaction_user.id == 882241177578004542 :
             if reaction.emoji == "❌":
                 denied_embed = discord.Embed(color=discord.Color.red(), title=" ❌ La demande de trade a été refusée", description="Merci de relancer la commande si cela était une erreur.")
                 self.bot.logger.info(f"{destinataire.name} a refusé la demande de trade de {ctx.author.name}, dans {ctx.guild.name}")
@@ -423,7 +423,7 @@ class Trade(commands.Cog):
             
         #How to check for the reaction    
         def reaction_check(reaction, user):
-            return ask_message.id == reaction.message.id and (ctx.author == user or 882241177578004542 == user.id) and (str(reaction.emoji) == "✅" or str(reaction.emoji) == "❌")
+            return ask_message.id == reaction.message.id and ctx.author == user and (str(reaction.emoji) == "✅" or str(reaction.emoji) == "❌")
             
             
             
@@ -440,9 +440,8 @@ class Trade(commands.Cog):
             
             return await ctx.send(embed=denied_embed)
         
-        
         #What if the author cancel the request
-        if (reaction_user.id == ctx.author.id or reaction_user.id == 882241177578004542) and reaction.emoji == "❌":
+        if reaction_user.id == ctx.author.id and reaction.emoji == "❌":
 
             denied_embed = discord.Embed(color=discord.Color.red(), title=" 🛑 Votre offre a été annulée", description="Merci de relancer la commande si cela était une erreur.")
             self.bot.logger.info(f"{ctx.author.name} a annulée son cadeau pour {destinataire.name}, dans {ctx.guild.name}")
