@@ -5,25 +5,9 @@ import os
 import json
 import random
 import time
+import bot_package.Custom_func as Cf
 
 
-#Get inv func
-async def get_inv(id : int):
-    if os.path.exists(f"./files/inventory/{str(id)}.json"):
-        with open(f"./files/inventory/{str(id)}.json") as f:
-            data = json.load(f)
-    else :
-        #retrun nothing if there's nothing to :/
-        data = {}
-       
-    return data
-
-
-
-#save inv func
-async def save_inv(data : dict, id : int):
-    with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
 
 
 
@@ -50,7 +34,7 @@ class Medallium(commands.Cog) :
             user = ctx.author
 
         #Get inventory
-        brute_inventory = await get_inv(user.id)
+        brute_inventory = await Cf.get_inv(user.id)
 
         #try if the inv is empty
         if brute_inventory == {}:
@@ -105,8 +89,6 @@ class Medallium(commands.Cog) :
         image_link = self.bot.image_link
 
 
-        async def classid_to_class(id, reverse: bool = False):
-            return await self.bot.classid_to_class(id=id, reverse=reverse)
 
 
         #Inv dropdown class
@@ -139,7 +121,7 @@ class Medallium(commands.Cog) :
                     try:
                         for classes in yokai_per_class:
                             yokai_list_brute = yokai_per_class[classes]
-                            classes_name = await classid_to_class(classes)
+                            classes_name = await Cf.classid_to_class(classes, False)
                             class_id = classes
 
                             yokai_list_formated = ""
@@ -164,9 +146,9 @@ class Medallium(commands.Cog) :
                         return await interaction.response.send_message(embed=error_embed)
 
                 else:
-                    asked_class = await classid_to_class(self.values[0], True)
+                    asked_class = await Cf.classid_to_class(self.values[0], True)
                     yokai_list_brute = yokai_per_class[asked_class]
-                    classes_name = await classid_to_class(asked_class)
+                    classes_name = await Cf.classid_to_class(asked_class, False)
                     class_id = asked_class
 
                     yokai_list_formated = ""
@@ -213,9 +195,9 @@ class Medallium(commands.Cog) :
             if brute_inventory[classes] == 0:
                 pass
             elif len(classes) == 1:
-                yokai_claimed_count += f"Yo-kai de rang **{await classid_to_class(classes)}**: `{brute_inventory[classes]}/{list_len[classes]}`\n"
+                yokai_claimed_count += f"Yo-kai de rang **{await Cf.classid_to_class(classes, False)}**: `{brute_inventory[classes]}/{list_len[classes]}`\n"
             else:
-                yokai_claimed_count += f"Yo-kai **{await classid_to_class(classes)}**: `{brute_inventory[classes]}/{list_len[classes]}`\n"
+                yokai_claimed_count += f"Yo-kai **{await Cf.classid_to_class(classes, False)}**: `{brute_inventory[classes]}/{list_len[classes]}`\n"
 
         main_embed.add_field(name="Voici vos statistiques :", value=yokai_claimed_count, inline=True)
         main_embed.set_footer(text="Merci de choisir parmi les propositions ci-dessous pour afficher vos Yo-kai.")

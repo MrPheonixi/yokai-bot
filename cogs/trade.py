@@ -6,24 +6,7 @@ import os
 import json
 import random
 import time
-
-#Get inv func
-async def get_inv(id : int):
-    if os.path.exists(f"./files/inventory/{str(id)}.json"):
-        with open(f"./files/inventory/{str(id)}.json") as f:
-            data = json.load(f)
-    else :
-        #retrun nothing if there's nothing to :/
-        data = {}
-       
-    return data
-
-
-
-#save inv func
-async def save_inv(data : dict, id : int):
-    with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+import bot_package.Custom_func as Cf
 
 
 class Trade(commands.Cog):
@@ -74,8 +57,8 @@ class Trade(commands.Cog):
         
         
         #Get what we need
-        author_inv = await get_inv(ctx.author.id)
-        recipient_inv = await get_inv(destinataire.id)
+        author_inv = await Cf.get_inv(ctx.author.id)
+        recipient_inv = await Cf.get_inv(destinataire.id)
         
         #Format the yokai(s) in a tuple with separator ","
 
@@ -138,11 +121,11 @@ class Trade(commands.Cog):
         #format the asked yokai :      
         asked_yokai_form = ""
         for asked_yokai in son_yokai :
-            asked_yokai_form += f"> Le Yo-kai **{asked_yokai}** de rang **{await self.bot.classid_to_class(recipient_inv[asked_yokai][0])}**\n "
+            asked_yokai_form += f"> Le Yo-kai **{asked_yokai}** de rang **{await Cf.classid_to_class(recipient_inv[asked_yokai][0])}**\n "
         
         offered_yokai = ""
         for asked_yokai in ton_yokai :
-            offered_yokai += f"> Le Yo-kai **{asked_yokai}** de rang **{await self.bot.classid_to_class(author_inv[asked_yokai][0])}**\n "
+            offered_yokai += f"> Le Yo-kai **{asked_yokai}** de rang **{await Cf.classid_to_class(author_inv[asked_yokai][0])}**\n "
         
         
 
@@ -299,8 +282,8 @@ class Trade(commands.Cog):
                 recipient_inv[author_inv[asked_yokai][0]] -= 1
                 
         #Save the inv
-        await save_inv(author_inv, ctx.author.id)
-        await save_inv(recipient_inv, destinataire.id)
+        await Cf.save_inv(author_inv, ctx.author.id)
+        await Cf.save_inv(recipient_inv, destinataire.id)
         
         #remove the user from the queue
         for i in ton_yokai:
@@ -342,8 +325,8 @@ class Trade(commands.Cog):
         
         
         #Get what we need
-        author_inv = await get_inv(ctx.author.id)
-        recipient_inv = await get_inv(destinataire.id)
+        author_inv = await Cf.get_inv(ctx.author.id)
+        recipient_inv = await Cf.get_inv(destinataire.id)
         
         #format the yokai
         ton_yokai = tuple(ton_yokai.split(sep=", "))
@@ -397,7 +380,7 @@ class Trade(commands.Cog):
         #Format the offered yokai
         offered_yokai = ""
         for asked_yokai in ton_yokai :
-            offered_yokai += f"> Le Yo-kai **{asked_yokai}** de rang **{await self.bot.classid_to_class(author_inv[asked_yokai][0])}**\n "
+            offered_yokai += f"> Le Yo-kai **{asked_yokai}** de rang **{await Cf.classid_to_class(author_inv[asked_yokai][0])}**\n "
         
         #ADD the user to the queue
         for i in ton_yokai:
@@ -493,8 +476,8 @@ class Trade(commands.Cog):
             
                 
         #Save the inv
-        await save_inv(author_inv, ctx.author.id)
-        await save_inv(recipient_inv, destinataire.id)
+        await Cf.save_inv(author_inv, ctx.author.id)
+        await Cf.save_inv(recipient_inv, destinataire.id)
         
         #remove the user from the queue
         for i in ton_yokai:

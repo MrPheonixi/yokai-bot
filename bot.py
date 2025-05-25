@@ -335,16 +335,7 @@ class DiscordBot(commands.Bot):
                 return
             self.logger.error(error_info)
 
-    async def classid_to_class(self, id, reverse : bool = False):
-        if reverse == False :
-            return yokai_data[id]["class_name"]
-        else :
-            for classes in yokai_data :
-                if yokai_data[classes]["class_name"] == id :
-                    return classes
-            
-        #return nothing if the id or the name was not fund    
-        return ""
+    
 
 bot = DiscordBot()
 bot.run(os.getenv("TOKEN"))

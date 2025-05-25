@@ -6,24 +6,7 @@ import os
 import json
 import random
 import time
-
-#Get inv func
-async def get_inv(id : int):
-    if os.path.exists(f"./files/inventory/{str(id)}.json"):
-        with open(f"./files/inventory/{str(id)}.json") as f:
-            data = json.load(f)
-    else :
-        #retrun nothing if there's nothing to :/
-        data = {}
-       
-    return data
-
-
-
-#save inv func
-async def save_inv(data : dict, id : int):
-    with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+import bot_package.Custom_func as Cf
 
 
 #Bot admin commands
@@ -69,7 +52,7 @@ class Admin_command(commands.Cog):
                     return await ctx.send(embed=error_embed)
                 
                 #is the inv already empty ?
-                brute_inventory = await get_inv(input_id)
+                brute_inventory = await Cf.get_inv(input_id)
 
                 if brute_inventory == {}:
                     error_embed = discord.Embed(
@@ -80,7 +63,7 @@ class Admin_command(commands.Cog):
                 
                 #empt the inv and send the message
                 brute_inventory = {}
-                await save_inv(brute_inventory, input_id)
+                await Cf.save_inv(brute_inventory, input_id)
                 sucess_embed = discord.Embed(
                     title="Le Médallium de cette utilisateur a été vidé !",
                     color= discord.Color.green()
@@ -188,7 +171,7 @@ class Admin_command(commands.Cog):
                     
                     
                     #verify if the inv is empty :
-                    inv = await get_inv(input_id)
+                    inv = await Cf.get_inv(input_id)
                     if inv == {}:
                         inv = {
                                 "last_claim" : 10000,
@@ -207,7 +190,7 @@ class Admin_command(commands.Cog):
                         
                     #now, mod the json as asked
                     inv[yokai] = number
-                    await save_inv(inv, input_id)
+                    await Cf.save_inv(inv, input_id)
                     sucess_embed = discord.Embed(title=f"La valeur `{yokai}` a été modifié sur `{number}` dans le Médallium de `{input_id}`",
                                                 color=discord.Color.green(),
                                                 description=""
@@ -257,7 +240,7 @@ class Admin_command(commands.Cog):
             
             
             #Verify if the input id has an inventory file :
-            inv = await get_inv(input_id)
+            inv = await Cf.get_inv(input_id)
             if inv == {}:
                 inv = {
                         "last_claim" : 10000,
@@ -277,7 +260,7 @@ class Admin_command(commands.Cog):
                 inv[class_id] = 1
                 if not number == 1 :
                     inv[yokai].append(int(number))
-                await save_inv(data=inv, id=input_id)
+                await Cf.save_inv(data=inv, id=input_id)
                 
             else :
                 #we have to verify :
@@ -301,7 +284,7 @@ class Admin_command(commands.Cog):
                         #add one more to the yokai count of the coresponding class
                         inv[class_id] += 1
                     #save the inv
-                    await save_inv(data=inv, id=input_id)
+                    await Cf.save_inv(data=inv, id=input_id)
                 
             sucess_embed = discord.Embed(title=f"Le(s) Yo-Kai a été ajouté au Médallium de {input_id}",
                                          color=discord.Color.green(),
@@ -367,7 +350,7 @@ class Admin_command(commands.Cog):
             
             
             #Verify if the input id has an inventory file :
-            inv = await get_inv(input_id)
+            inv = await Cf.get_inv(input_id)
             if inv == {}:
                 error_embed = discord.Embed(
                     title=f"Ce Yo-kai n'est pas dans le Médallium de {input_id}",
@@ -426,7 +409,7 @@ class Admin_command(commands.Cog):
                     else :
                         inv.pop(yokai)
                         inv[class_id] -= 1
-                    await save_inv(data=inv, id=input_id)
+                    await Cf.save_inv(data=inv, id=input_id)
                 
             sucess_embed = discord.Embed(title=f"Le(s) Yo-Kai a été retiré du Médallium de {input_id}",
                                          color=discord.Color.green(),

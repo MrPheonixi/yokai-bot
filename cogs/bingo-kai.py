@@ -5,24 +5,7 @@ import os
 import json
 import random
 import time
-
-#Get inv func
-async def get_inv(id : int):
-    if os.path.exists(f"./files/inventory/{str(id)}.json"):
-        with open(f"./files/inventory/{str(id)}.json") as f:
-            data = json.load(f)
-    else :
-        #retrun nothing if there's nothing to :/
-        data = {}
-       
-    return data
-
-
-
-#save inv func
-async def save_inv(data : dict, id : int):
-    with open(f"./files/inventory/{str(id)}.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+import bot_package.Custom_func as Cf
 
 # Yokai command cog
 class Yokai(commands.Cog):
@@ -44,7 +27,7 @@ class Yokai(commands.Cog):
         La commande possède un cooldown de 1h30 (1h sur le serveur de support ;) )
         """
                 #define the inv
-        brute_inventory = await get_inv(ctx.author.id)
+        brute_inventory = await Cf.get_inv(ctx.author.id)
 
         #verify if the cooldown is bypassed ?
         iscooldown = True
@@ -61,7 +44,7 @@ class Yokai(commands.Cog):
 
         if free_claim > 0:
             brute_inventory["claim"] -= 1
-            await save_inv(brute_inventory, ctx.author.id)
+            await Cf.save_inv(brute_inventory, ctx.author.id)
             iscooldown = False
             #Thx copilot for that one, i was too lazy to code it :->
 
@@ -164,7 +147,7 @@ class Yokai(commands.Cog):
                     #Set last claim
                     brute_inventory["last_claim"] = time.time()
                     #SAVE the inv
-                    await save_inv(brute_inventory, ctx.author.id)
+                    await Cf.save_inv(brute_inventory, ctx.author.id)
 
                     #Send the embed
                     return await ctx.send(embed=yokai_embed)
@@ -172,7 +155,7 @@ class Yokai(commands.Cog):
             brute_inventory[Yokai_choice] = [class_id]
             brute_inventory[class_id] += 1
             brute_inventory["last_claim"] = time.time()
-            await save_inv(brute_inventory, ctx.author.id)
+            await Cf.save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
                 value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
@@ -181,7 +164,7 @@ class Yokai(commands.Cog):
         else:
             brute_inventory[Yokai_choice] = [class_id]
             brute_inventory[class_id] += 1
-            await save_inv(brute_inventory, ctx.author.id)
+            await Cf.save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
                 value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
@@ -197,7 +180,7 @@ class Yokai(commands.Cog):
         Diminutif de /bingo-kai
         """
         #define the inv
-        brute_inventory = await get_inv(ctx.author.id)
+        brute_inventory = await Cf.get_inv(ctx.author.id)
 
         #verify if the cooldown is bypassed ?
         iscooldown = True
@@ -214,7 +197,7 @@ class Yokai(commands.Cog):
 
         if free_claim > 0:
             brute_inventory["claim"] -= 1
-            await save_inv(brute_inventory, ctx.author.id)
+            await Cf.save_inv(brute_inventory, ctx.author.id)
             iscooldown = False
             #Thx copilot for that one, i was too lazy to code it :->
 
@@ -316,7 +299,7 @@ class Yokai(commands.Cog):
                     #Set last claim
                     brute_inventory["last_claim"] = time.time()
                     #SAVE the inv
-                    await save_inv(brute_inventory, ctx.author.id)
+                    await Cf.save_inv(brute_inventory, ctx.author.id)
 
                     #Send the embed
                     return await ctx.send(embed=yokai_embed)
@@ -324,7 +307,7 @@ class Yokai(commands.Cog):
             brute_inventory[Yokai_choice] = [class_id]
             brute_inventory[class_id] += 1
             brute_inventory["last_claim"] = time.time()
-            await save_inv(brute_inventory, ctx.author.id)
+            await Cf.save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
                 value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
@@ -333,7 +316,7 @@ class Yokai(commands.Cog):
         else:
             brute_inventory[Yokai_choice] = [class_id]
             brute_inventory[class_id] += 1
-            await save_inv(brute_inventory, ctx.author.id)
+            await Cf.save_inv(brute_inventory, ctx.author.id)
             yokai_embed.add_field(
                 name="Vous ne l'avez jamais eu !",
                 value="Il a été ajouté a votre Médallium. Faites `/medallium` pour le voir."
