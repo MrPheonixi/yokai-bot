@@ -100,6 +100,15 @@ class Trade(commands.Cog):
         if not recipient_have_it :
             return await ctx.send(embed=dont_have_it_embed("r"))
         
+        #check if they try to trade them self
+        if ctx.author == destinataire :
+            error_embed = discord.Embed(title="Vous ne pouvez pas faire de trade à vous même !",
+                                        color=discord.Color.red(),
+                                        description="Merci de demander à quelqu'un d'autre."
+                                        )
+            return await ctx.send(embed=error_embed)
+        
+        
         #Check for them in the queue:
         for yokai in ton_yokai:
             if yokai in await self.bot.trade_queue.show(id=ctx.author.id):
@@ -367,6 +376,15 @@ class Trade(commands.Cog):
                                         description="Verifiez que l'orthographe est correct ou que vous le(s) possédez bien (`/medallium`)"
                                         )
             return await ctx.send(embed=error_embed)
+        
+        #check if they try to dup
+        if ctx.author == destinataire :
+            error_embed = discord.Embed(title="Vous ne pouvez pas faire de cadeau à vous même !",
+                                        color=discord.Color.red(),
+                                        description="Merci de proposer à quelqu'un d'autre."
+                                        )
+            return await ctx.send(embed=error_embed)
+        
         
         #check in the queue
         for yokai in ton_yokai:
