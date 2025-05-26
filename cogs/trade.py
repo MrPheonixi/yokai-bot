@@ -318,7 +318,7 @@ class Trade(commands.Cog):
         return await ctx.send(embed=success_embed)
             
             
-    @commands.hybrid_command()
+    @commands.hybrid_command(name="cadeau")
     async def cadeau(self, ctx : commands.Context, ton_yokai : str, destinataire : discord.User):
         
         """
